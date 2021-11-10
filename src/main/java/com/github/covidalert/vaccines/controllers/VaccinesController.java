@@ -30,7 +30,18 @@ public class VaccinesController
     @ResponseStatus(HttpStatus.CREATED)
     public Vaccine createVaccine(Principal principal, @Valid @RequestBody CreateVaccineDTO vaccineDTO)
     {
-        Vaccine vaccine = new Vaccine(principal.getName(), vaccineDTO.getVaccineType(), vaccineDTO.getDoseNumber());
+        Vaccine vaccine = new Vaccine(
+                principal.getName(),
+                vaccineDTO.getDisease(),
+                vaccineDTO.getVaccine(),
+                vaccineDTO.getVaccineMedicinalProduct(),
+                vaccineDTO.getManufacturer(),
+                vaccineDTO.getDoseNumber(),
+                vaccineDTO.getDoseNumberMax(),
+                vaccineDTO.getVaccinationDate(),
+                vaccineDTO.getMemberState(),
+                vaccineDTO.getCertificateIssuer()
+        );
         return vaccinesRepository.saveAndFlush(vaccine);
     }
 
@@ -43,7 +54,6 @@ public class VaccinesController
     @PutMapping
     public Vaccine updateVaccine(Principal principal, @Valid @RequestBody UpdateVaccineDTO vaccineDTO)
     {
-        System.out.println(vaccineDTO.getDoseNumber());
         Vaccine existingVaccine = vaccinesRepository.getById(principal.getName());
         BeanUtils.copyProperties(vaccineDTO, existingVaccine);
         return vaccinesRepository.saveAndFlush(existingVaccine);
