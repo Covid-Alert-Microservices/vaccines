@@ -1,4 +1,4 @@
-package com.github.covidalert.microservicetemplate;
+package com.github.covidalert.vaccines;
 
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
