@@ -8,9 +8,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/vaccine")
@@ -23,7 +25,14 @@ public class VaccinesController
     @GetMapping
     public Vaccine getVaccine(Principal principal)
     {
-        return vaccinesRepository.getById(principal.getName());
+        Optional<Vaccine> vaccine = vaccinesRepository.findById(principal.getName());
+
+        if (vaccine.isEmpty())
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        return vaccine.get();
     }
 
     @PostMapping
@@ -46,17 +55,28 @@ public class VaccinesController
     }
 
     @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteVaccine(Principal principal)
     {
-        vaccinesRepository.deleteById(principal.getName());
+        if (vaccinesRepository.deleteByUserId(principal.getName()) < 1)
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping
     public Vaccine updateVaccine(Principal principal, @Valid @RequestBody UpdateVaccineDTO vaccineDTO)
     {
-        Vaccine existingVaccine = vaccinesRepository.getById(principal.getName());
-        BeanUtils.copyProperties(vaccineDTO, existingVaccine);
-        return vaccinesRepository.saveAndFlush(existingVaccine);
+        Optional<Vaccine> existingVaccine = vaccinesRepository.findById(principal.getName());
+
+        if (existingVaccine.isEmpty())
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        Vaccine vaccine = existingVaccine.get();
+        BeanUtils.copyProperties(vaccineDTO, vaccine);
+        return vaccinesRepository.saveAndFlush(vaccine);
     }
 
 }
