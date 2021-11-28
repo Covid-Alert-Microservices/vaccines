@@ -3,7 +3,7 @@ package com.github.covidalert.vaccines.dtos;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class CreateVaccineDTO
+public class CreateOrUpdateVaccineDTO
 {
 
     @NotNull
@@ -33,7 +33,7 @@ public class CreateVaccineDTO
     @NotNull
     private String certificateIssuer;
 
-    public CreateVaccineDTO()
+    public CreateOrUpdateVaccineDTO()
     {
     }
 

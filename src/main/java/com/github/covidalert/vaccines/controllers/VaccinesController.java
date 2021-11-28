@@ -1,7 +1,6 @@
 package com.github.covidalert.vaccines.controllers;
 
-import com.github.covidalert.vaccines.dtos.CreateVaccineDTO;
-import com.github.covidalert.vaccines.dtos.UpdateVaccineDTO;
+import com.github.covidalert.vaccines.dtos.CreateOrUpdateVaccineDTO;
 import com.github.covidalert.vaccines.models.Vaccine;
 import com.github.covidalert.vaccines.repositories.VaccinesRepository;
 import org.springframework.beans.BeanUtils;
@@ -37,7 +36,7 @@ public class VaccinesController
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Vaccine createVaccine(Principal principal, @Valid @RequestBody CreateVaccineDTO vaccineDTO)
+    public Vaccine createVaccine(Principal principal, @Valid @RequestBody CreateOrUpdateVaccineDTO vaccineDTO)
     {
         Vaccine vaccine = new Vaccine(
                 principal.getName(),
@@ -65,7 +64,7 @@ public class VaccinesController
     }
 
     @PutMapping
-    public Vaccine updateVaccine(Principal principal, @Valid @RequestBody UpdateVaccineDTO vaccineDTO)
+    public Vaccine updateVaccine(Principal principal, @Valid @RequestBody CreateOrUpdateVaccineDTO vaccineDTO)
     {
         Optional<Vaccine> existingVaccine = vaccinesRepository.findById(principal.getName());
 
