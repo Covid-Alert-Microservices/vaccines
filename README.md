@@ -1,4 +1,4 @@
-# Vaccines [![Build](https://github.com/Covid-Alert-Microservices/vaccines/actions/workflows/build.yaml/badge.svg)](https://github.com/Covid-Alert-Microservices/covid-tests/actions/workflows/build.yaml)
+# Vaccines [![Build](https://github.com/Covid-Alert-Microservices/vaccines/actions/workflows/build.yaml/badge.svg)](https://github.com/Covid-Alert-Microservices/covid-tests/actions/workflows/build.yaml) [![codecov](https://codecov.io/gh/Covid-Alert-Microservices/vaccines/branch/master/graph/badge.svg?token=UGUHDSFAIK)](https://codecov.io/gh/Covid-Alert-Microservices/vaccines)
 
 This repository manages vaccines for Covid-Alert
 
